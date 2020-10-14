@@ -5,22 +5,20 @@
         for (bracket of bracketsConfig) {
         brackets += bracket.join('');
     }
-
-    //console.log(`brackets ${brackets}`);
-    //console.log(`str ${str}`);
     
+    // create stack
     let result = [];
 
 
     for (item of str) {
-        //console.log(`НОВЫЙ ШАГ`);
-        //console.log(`символ: ${item}`);
-
 
         let index = brackets.indexOf(item);
 
+
+        /* if an item from a string is an opening bracket,
+        i. e. even index in bracketsConfig,
+        push it onto a stack */
         if (index % 2 === 0) {
-            //console.log(`index ${index}`);
             
             /* this checks if brackets are the same
             AND if the bracket which is about to pe pushed 
@@ -29,27 +27,24 @@
                 (index + 1) === result[result.length - 1]) {
                 let popped = result.pop();
 
-                //console.log(`popped equal ${popped}`);
-
-                //console.log(`else result ${result}`);
             } else {
                 result.push(index + 1);
-                //console.log(`result ${result}`);
             }
-
+        /* if an item from a string is a closing bracket,
+        i. e. odd index in bracketsConfig,
+        pop it from the stack */ 
         } else {
-            //console.log(`index ${index}`);
             
             let popped = result.pop();
-            //console.log(`popped ${popped}`);
 
-            //console.log(`else result ${result}`);
-
+            /* if a popped item doesn't match 
+            corresponding index in bracketsConfig,
+            stop the program, the brackets don't match */
             if (popped !== index) {
                 return false;
             }
         }
     }
-
+    // if the stack is empty, all brackets are matched
     return result.length === 0;
 }
